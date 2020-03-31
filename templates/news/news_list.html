@@ -1,3 +1,8 @@
+{% block search %}
+<a href="{% url 'news_filter' pk=1 %}"><button>Неделя</button> </a>
+<a href="{% url 'news_filter' pk=2 %}"><button>Месяц</button> </a>
+<a href="{% url 'news_filter' pk=3 %}"><button>Все</button> </a>
+{% endblock search %}
 {% for new in news %}
     <a href="{% url 'new_single' pk=new.id %}"> <h2>{{ new.title }}</h2></a>
     <p>{{ new.text_min }}</p>

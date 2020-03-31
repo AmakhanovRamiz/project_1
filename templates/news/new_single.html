@@ -5,11 +5,38 @@
 
 {% block content %}
     <h1>{{ new.title }}</h1>
-    <p>{{ new.text }}</p>
+    <p>{{ new.text|safe }}</p>
 
     Категория: {{ new.category }}<br>
     Теги - {% for tag in new.tags.all %}
                 {{ tag.title }}
-        {% endfor %}<br>
-    Автор: {{ new.user }} - {{ new.created }}
+            {% endfor %}<br>
+    Автор: {{ new.user }} - {{ new.created }}<br>
+    <br>
+
+    <h4> Комментарии </h4>
+    {% for comment in comments %}
+        Пользователь - {{ comment.user }}<br>
+        {{ comment.text }}<br>
+        Добавлен - {{ comment.created }}<br>
+        <br>
+    {% endfor %}
+
+    <!-- {% for comment in new.comments_set.all %}
+        Пользователь - {{ comment.user }}<br>
+        {{ comment.text }}<br>
+        Добавлен - {{ comment.created }}<br>
+        <br>
+    {% endfor %} -->
+    <br>
+    <br>
+    {% if user.is_active %}
+        <form action="" method = 'POST'> <!-- action = "" означает, что форма будет отображаться на этой же странице <p> -->
+            {% csrf_token %}
+            {{ form.as_p }} <!-- тег 'as_p' оборачивает form в тег <p> -->
+            <button type = 'submit'>Отправить</button>
+        </form>
+    {% else %}
+        <h4>Чтобы оставить комментарий, авторизируйтесть</h4>
+    {% endif %}
 {% endblock content %}
